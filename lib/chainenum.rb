@@ -16,20 +16,7 @@ class Enumerator
 end
 
 module Enumerable
-  def chain(size=0)
-    memo, index = Array.new(size), 0
-    # we need an object that responds to both #<< and #yield
-    yielder = Enumerator::Yielder.new do |head, *tail|
-      memo[index], index = (tail.empty? ? head : tail.unshift(head)), index.succ
-    end
-
-    each do |elem|
-      yield yielder, elem
-    end
-
-    # trim array if we preallocated more space than necessary
-    memo.slice!(index.succ .. -1) if memo.size > index.succ
-
-    memo
+  def chain(size=nil, &block)
+    each.chain(size, &block).to_a
   end
 end
