@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Enumerator
-  def chain(size=nil)
-    self.class.new(size) do |yielder|
+  def chain(*args)
+    self.class.new(*args) do |yielder|
       each do |elem|
         yield yielder, elem
       end
@@ -9,14 +9,14 @@ class Enumerator
   end
 
   class Lazy
-    def chain(size=nil, &block)
-      self.class.new(self, size, &block)
+    def chain(*args, &block)
+      self.class.new(self, *args, &block)
     end
   end if const_defined?(:Lazy)
 end
 
 module Enumerable
-  def chain(size=nil, &block)
-    each.chain(size, &block).to_a
+  def chain(*args, &block)
+    each.chain(*args, &block).to_a
   end
 end
