@@ -2,8 +2,8 @@
 class Enumerator
   def chain(*args)
     self.class.new(*args) do |yielder|
-      each do |elem|
-        yield yielder, elem
+      each do |*values|
+        yield yielder, *values
       end
     end
   end
