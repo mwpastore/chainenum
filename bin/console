@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'bundler/setup'
-require 'chainenum'
+require 'piecewise'
 require 'irb'
 
 IRB.start(__FILE__)

@@ -3,13 +3,13 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = 'chainenum'
-  spec.version       = '0.2.2'
+  spec.name          = 'piecewise'
+  spec.version       = '0.3.0'
   spec.authors       = ['Mike Pastore']
   spec.email         = ['mike@oobak.org']
 
-  spec.summary       = 'Add #chain to enumerables, enumerators, and lazy enumerators'
-  spec.homepage      = 'https://github.com/mwpastore/chainenum'
+  spec.summary       = 'Add #piecewise to enumerables, enumerators, and lazy enumerators'
+  spec.homepage      = 'https://github.com/mwpastore/ruby-piecewise'
   spec.license       = 'MIT'
 
   spec.files         = %x{git ls-files -z}.split("\x0").reject do |f|

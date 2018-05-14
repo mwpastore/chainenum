@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Enumerator
-  def chain(*args)
+  def piecewise(*args)
     self.class.new(*args) do |yielder|
       each do |*values|
         yield yielder, *values
@@ -9,14 +9,14 @@ class Enumerator
   end
 
   class Lazy
-    def chain(*args, &block)
+    def piecewise(*args, &block)
       self.class.new(self, *args, &block)
     end
   end if const_defined?(:Lazy)
 end
 
 module Enumerable
-  def chain(*args, &block)
-    each.chain(*args, &block).to_a
+  def piecewise(*args, &block)
+    each(*args).piecewise(&block).to_a
   end
 end

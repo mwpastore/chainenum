@@ -1,4 +1,4 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'chainenum'
+require 'piecewise'
 
 require 'minitest/autorun'

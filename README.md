@@ -1,31 +1,33 @@
-# ChainEnum
+# Piecewise Rubygem
 
-Chainable Enumerables, Enumerators, and Lazy Enumerators.
+Piecewise Enumerables, Enumerators, and Lazy Enumerators for Ruby.
 
 Do you ever find yourself doing something like:
-
-```ruby
-even_keys = tuples.select { |_, v| v.even? }.keys.map(&:upcase)
-```
-
-Or:
 
 ```ruby
 even_keys = tuples.map { |k, v| k.upcase if v.even? }.compact
 ```
 
-I've always found this pattern a little bit off-putting, especially when I have
-a big `do`..`end` block containing conditional logic and then a `.compact`
-tacked on to it. Maybe I'm picky. You can wrap the logic in an `Enumerator.new
-{ |yielder| .. }` or move the logic to a method that returns an enumerator, but
-that can be a lot of boilerplate for a simple filter+map operation.
-
-This simple gem monkeypatches Enumerable, Enumerator, and Enumerator::Lazy to
-add a `#chain` method that lets you do kind of an inline enumerator. The above
-example can be rewritten like this:
+Or:
 
 ```ruby
-even_keys = tuples.chain { |yielder, (k, v)| yielder << k.upcase if v.even? }
+even_keys = tuples.select { |_, v| v.even? }.keys.map(&:upcase)
+```
+
+I've always found this pattern a little bit off-putting, especially when I have
+a big `do`..`end` block containing conditional logic and then a `.compact`
+tacked on to it. (Maybe I'm picky.) And sometimes `nil` is a valid value, so
+you have to introduce a new sentinel value to reject by. You can wrap the logic
+in an `Enumerator.new { |yielder| .. }` or move the logic to a method that
+returns an enumerator, but that can be a lot of boilerplate for a simple
+filter+map operation.
+
+This simple gem monkeypatches Enumerable, Enumerator, and Enumerator::Lazy to
+add a `#piecewise` method that lets you do kind of an inline enumerator. The
+above example can be rewritten like this:
+
+```ruby
+even_keys = tuples.piecewise { |yielder, (k, v)| yielder << k.upcase if v.even? }
 ```
 
 I find this easier to read and grok. Perhaps you will too.
@@ -35,7 +37,7 @@ I find this easier to read and grok. Perhaps you will too.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'chainenum'
+gem 'piecewise'
 ```
 
 And then execute:
@@ -47,7 +49,7 @@ $ bundle
 Or install it yourself as:
 
 ```sh
-$ gem install chainenum
+$ gem install piecewise
 ```
 
 ## Development
@@ -62,10 +64,12 @@ release a new version, update the version number in `version.rb`, and then run
 git commits and tags, and push the `.gem` file to
 [rubygems.org](https://rubygems.org).
 
+This gem was briefly named *chainenum* before being renamed to *piecewise*.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at
-https://github.com/mwpastore/chainenum.
+https://github.com/mwpastore/ruby-piecewise.
 
 ## License
 
